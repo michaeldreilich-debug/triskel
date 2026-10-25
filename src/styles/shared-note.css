@@ -1,0 +1,237 @@
+/*
+ * Öffentlich freigegebene Notiz (#94, E42, /freigabe/<token>): nur lesend, ruhig wie der Outliner
+ * (outliner.css, text-style.css). Nur Token-Variablen; Textfarbe und Marker kommen über die
+ * gemeinsamen Klassen `tx-color`/`tx-marker`.
+ */
+.shared-note {
+  color: var(--text);
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.shared-note .sn-list {
+  margin: 0;
+  padding-left: 24px;
+  list-style: disc;
+}
+
+.shared-note .sn-root {
+  padding-left: 20px;
+}
+
+.shared-note .sn-block::marker {
+  color: var(--text-faint);
+}
+
+/* Aufgaben haben ihr Kästchen, Trennlinien keinen Punkt */
+.shared-note .sn-block:is([data-task], [data-kind="divider"]) {
+  list-style: none;
+}
+
+.shared-note .sn-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.shared-note .sn-p {
+  min-width: 0;
+  flex: 1;
+  margin: 0;
+  padding: 3px 0;
+  min-height: 1.6em;
+}
+
+.shared-note .sn-check {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: calc(0.8em - 5px) 0 0 -24px;
+  accent-color: var(--accent);
+}
+
+.shared-note .sn-block[data-task="done"] > .sn-row > .sn-p {
+  color: var(--text-faint);
+  text-decoration: line-through;
+  text-decoration-color: var(--text-faint);
+}
+
+/* ---------- Absatzarten (wie text-style.css) ---------- */
+.shared-note .sn-p:is([data-kind="h1"], [data-kind="h2"], [data-kind="h3"]) {
+  font-family: var(--heading-font);
+  font-weight: var(--heading-weight);
+  color: var(--text);
+}
+
+.shared-note .sn-p[data-kind="h1"] {
+  padding: 14px 0 2px;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.shared-note .sn-p[data-kind="h2"] {
+  padding: 10px 0 2px;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.shared-note .sn-p[data-kind="h3"] {
+  padding: 6px 0 2px;
+  font-size: 1.0625rem;
+  line-height: 1.625rem;
+  font-weight: 600;
+}
+
+.shared-note .sn-p[data-kind="quote"] {
+  margin: 2px 0;
+  border-left: 3px solid var(--border-strong);
+  padding-left: 12px;
+  color: var(--text-muted);
+}
+
+.shared-note .sn-p[data-kind="callout"] {
+  position: relative;
+  margin: 4px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background-color: var(--surface-2);
+  padding: 8px 12px 8px 38px;
+}
+
+.shared-note .sn-p[data-kind="callout"]::after {
+  content: "i";
+  position: absolute;
+  top: calc(8px + 0.8em - 9px);
+  left: 12px;
+  display: flex;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--text-faint);
+  border-radius: 9999px;
+  color: var(--text-faint);
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.shared-note hr {
+  margin: 0.8em 0;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+}
+
+/* ---------- Inhalt im Text ---------- */
+.shared-note a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: var(--link-line);
+  text-underline-offset: 3px;
+}
+
+.shared-note a:hover {
+  text-decoration-color: var(--link);
+}
+
+.shared-note code {
+  border-radius: var(--radius-control);
+  background-color: var(--surface-2);
+  padding: 1px 4px;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.shared-note .sn-muted {
+  color: var(--text-faint);
+  font-style: italic;
+}
+
+.shared-note .sn-tag {
+  color: var(--text-muted);
+}
+
+.shared-note .sn-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2px 0 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background-color: var(--surface);
+}
+
+.shared-note a.sn-file {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background-color: var(--surface);
+  padding: 4px 10px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.shared-note a.sn-file:hover {
+  background-color: var(--surface-2);
+}
+
+.shared-note a.sn-file svg {
+  flex-shrink: 0;
+  color: var(--text-faint);
+}
+
+.shared-note .sn-file-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shared-note .sn-diagram {
+  margin: 0;
+}
+
+.shared-note .sn-code {
+  margin: 4px 0 6px;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background-color: var(--surface-2);
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: var(--text-ui);
+  line-height: 1.5;
+  /* umbrechen statt seitlich scrollen (390 px, kein Scrollbereich ohne Tastatur) */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.shared-note .sn-code code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* eingeklappt (wie im Editor), mit einem Klick aufklappbar */
+.shared-note .sn-fold > summary {
+  width: fit-content;
+  cursor: pointer;
+  border-radius: var(--radius-control);
+  padding: 0 4px;
+  margin-left: -4px;
+  color: var(--text-faint);
+  font-size: var(--text-meta);
+  line-height: var(--text-meta--line-height);
+}
+
+.shared-note .sn-fold > summary:hover {
+  color: var(--text);
+  background-color: var(--surface-2);
+}

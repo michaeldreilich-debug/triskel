@@ -1,0 +1,264 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Markdown-Export (B14) > Snapshot des ganzen Vaults (ohne export.json) 1`] = `
+[
+  {
+    "content": "---
+typ: projekt
+id: p1
+bereich: Beruf
+status: Aktiv
+prioritaet: Hoch
+start: 2026-10-01
+ziel: 2026-11-30
+fortschritt: "1/3"
+naechster_meilenstein: Durchführen
+erstellt: 2026-10-12
+geaendert: 2026-10-12
+---
+
+# Herbstübung
+
+## Warum
+
+Alle sicher am Gerät
+
+## Fertig ist es, wenn …
+
+- [ ] Übung durchgeführt
+
+## Links
+
+- [Übungsplan](https://www.notion.so/uebung)
+- [kreis.de](https://kreis.de/termine)
+
+## Freitext
+
+Absprache mit der Teamleitung
+- [x] Termin steht
+
+## Nächster Schritt
+
+- [ ] Raum buchen (fällig 2026-10-20)
+
+## Fahrplan
+
+Meilensteine in Reihenfolge. Abarbeiten: den ersten offenen Meilenstein zuerst, darin die offenen Aufgaben von oben nach unten.
+
+### 1. Planen · erreicht 2026-10-12
+
+- [ ] Raum buchen (fällig 2026-10-20)
+- [x] Einladung (erledigt 2026-10-12)
+
+### 2. Durchführen · offen
+
+_Noch keine Aufgaben._
+
+## Aufgaben ohne Meilenstein
+
+- [ ] Bericht (blockiert durch Raum buchen)
+    Fotos anhängen
+
+## Notizen
+
+- [[Flaschen prüfen]]
+",
+    "path": "Projekte/Beruf/Herbstübung.md",
+  },
+  {
+    "content": "---
+typ: aufgaben
+bereich: Privat
+offen: 3
+---
+
+# Aufgaben · Privat
+
+## Offen
+
+- [ ] Einkaufen (Priorität mittel · Termin Sa, 24.10. 08:00–10:00 · Wochenmarkt (ganze Serie))
+- [ ] Vom Assistenten (von KI angelegt)
+- [ ] Bauschritt (von KI angelegt · für die KI)
+",
+    "path": "Aufgaben/Privat.md",
+  },
+  {
+    "content": "---
+typ: aufgaben
+bereich: Inbox
+offen: 1
+---
+
+# Aufgaben · Inbox
+
+## Offen
+
+- [ ] Idee sortieren
+",
+    "path": "Aufgaben/Inbox.md",
+  },
+  {
+    "content": "---
+typ: notiz
+notiztyp: Wissen
+id: n1
+bereich: Beruf
+thema: Atemschutz
+projekt: "[[Herbstübung]]"
+termin: "Mi, 21.10. 19:00–21:00 · Übungsdienst"
+tags: ["geräte"]
+erstellt: 2026-10-12
+geaendert: 2026-10-12
+---
+
+# Flaschen prüfen
+
+- Druck prüfen
+  - Siehe [[Flaschen prüfen (2)|Flaschen prüfen]]
+- [x] Raum buchen
+",
+    "path": "Wissen/Beruf/Atemschutz/Flaschen prüfen.md",
+  },
+  {
+    "content": "---
+typ: notiz
+notiztyp: Wissen
+id: n2
+bereich: Beruf
+erstellt: 2026-10-12
+geaendert: 2026-10-12
+---
+
+# Flaschen prüfen
+",
+    "path": "Wissen/Beruf/Flaschen prüfen (2).md",
+  },
+  {
+    "content": "---
+typ: notiz
+notiztyp: Wissen
+id: n3
+bereich: Beruf
+erstellt: 2026-10-12
+geaendert: 2026-10-12
+---
+
+# Leer
+",
+    "path": "Wissen/Beruf/Leer.md",
+  },
+  {
+    "content": "---
+typ: rueckblick
+art: woche
+id: r1
+kw: 42
+start: 2026-10-12
+ende: 2026-10-18
+stimmung: 4
+themen: ["schlaf"]
+abgeschlossen: 2026-10-18
+---
+
+# Wochenrückblick KW 42 · 12.–18.10.2026
+
+## Wie ging es mir (1–5)?
+
+4 von 5
+
+## Was lief gut?
+
+Übung geplant
+
+## Was war schwer?
+
+_offen_
+
+## Was nehme ich mit?
+
+_offen_
+
+## Energie
+
+_offen_
+
+## Sport
+
+_offen_
+
+## Beziehungen
+
+_offen_
+
+## Lernen
+
+_offen_
+
+## Fokus nächste Woche (3 Punkte)
+
+1. Bericht
+2. Sport
+
+## Gespräch
+
+### Gespräch
+
+_offen_
+
+### Hypothese
+
+_offen_
+
+### Gegenhypothese
+
+_offen_
+
+### Klartext
+
+_offen_
+
+### Bezug zur Vorwoche
+
+_offen_
+
+## Themen und Muster
+
+#schlaf
+
+## Zahlen
+
+- Erledigt: 1 (Beruf 1)
+- Meilensteine erreicht: 1
+- Fokus-Tage: 1 von 2
+- Neue Notizen: 0
+
+## Tagesverlauf
+
+### Mo, 12.10.
+- 10:00 erledigt: Einladung
+- 10:00 Notiz bearbeitet: [[Flaschen prüfen (2)|Flaschen prüfen]]
+",
+    "path": "Rückblicke/2026/Wochenrückblick 2026-KW42.md",
+  },
+  {
+    "content": "# Triskel – Export vom 2026-10-18
+
+7 Markdown-Dateien. In Obsidian: „Ordner als Vault öffnen“.
+
+## Aufbau
+
+- \`Projekte/<Bereich>/\` – je Projekt eine Datei: Warum, „Fertig ist es, wenn …“, Links, nächster Schritt, Fahrplan, Aufgaben, Notizen
+- \`Aufgaben/\` – Aufgaben ohne Projekt je Bereich, dazu die Inbox
+- \`Wissen/<Bereich>/<Thema>/\` – Notizen als verschachtelte Listen, Verweise als \`[[Notiz]]\`
+- \`Rückblicke/<Jahr>/\` – Wochen- und Monatsrückblicke mit Antworten, Zahlen und Tagesverlauf
+- \`Anhänge/\` – Bilder aus den Notizen (eingebettet als \`![[datei]]\`); Diagramme stehen als \`\`\`mermaid-Block in der Notiz
+- \`export.json\` – alle Daten aller Tabellen (auch der Papierkorb) als Sicherung
+
+## Fahrplan abarbeiten (für Claude)
+
+Jedes Projekt mit Meilensteinen hat einen Abschnitt „Fahrplan“: nummerierte Meilensteine in Reihenfolge, darunter ihre Aufgaben als Checkliste (\`- [ ]\` offen, \`- [x]\` erledigt). Abarbeiten: den ersten offenen Meilenstein zuerst, darin die offenen Aufgaben von oben nach unten. Die Eigenschaft \`naechster_meilenstein\` im Kopf der Datei nennt ihn.
+",
+    "path": "README.md",
+  },
+]
+`;

@@ -1,0 +1,556 @@
+/*
+ * Outliner (TipTap): ruhige Darstellung wie im Entwurf 08-Wissen.
+ * Nur Token-Variablen; eingeklappte Kinder bleiben im Dokument und werden ausgeblendet.
+ */
+.outline-editor {
+  outline: none;
+  color: var(--text);
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+  caret-color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.outline-editor p {
+  margin: 0;
+  padding: 3px 0;
+  min-height: 1.6em;
+}
+
+.ol-block {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+}
+
+.ol-gutter {
+  position: relative;
+  display: flex;
+  height: calc(1.6em + 6px);
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.ol-bullet {
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background-color: var(--text-faint);
+}
+
+.ol-block[data-has-children="true"] > .ol-gutter > .ol-bullet {
+  display: none;
+}
+
+.ol-toggle {
+  position: relative;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-control);
+  color: var(--text-faint);
+  transition:
+    color 150ms var(--ease-out),
+    background-color 150ms var(--ease-out);
+}
+
+.ol-toggle::before {
+  content: "▾";
+  font-size: 0.8125rem;
+  line-height: 1;
+  transition: transform 150ms var(--ease-out);
+}
+
+/* größere Trefferfläche für den Daumen, ohne das Layout zu verändern */
+.ol-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -12px;
+}
+
+.ol-toggle:hover {
+  color: var(--text);
+  background-color: var(--surface-2);
+}
+
+.ol-toggle[hidden] {
+  display: none;
+}
+
+.ol-block[data-collapsed="true"] > .ol-gutter > .ol-toggle::before {
+  transform: rotate(-90deg);
+}
+
+.ol-block[data-collapsed="true"] > .ol-body > .ol-block {
+  display: none;
+}
+
+.ol-block[data-collapsed="true"] > .ol-body::after {
+  content: attr(data-hidden-label);
+  display: block;
+  margin-top: -2px;
+  font-size: var(--text-meta);
+  line-height: var(--text-meta--line-height);
+  color: var(--text-faint);
+}
+
+.ol-note-link {
+  cursor: pointer;
+  color: var(--link);
+  border-bottom: 1px solid var(--link-line);
+  transition: border-color 150ms var(--ease-out);
+}
+
+.ol-note-link:hover {
+  border-bottom-color: var(--link);
+}
+
+.ol-note-link.is-missing {
+  color: var(--danger);
+}
+
+.ol-tag {
+  color: var(--text-muted);
+}
+
+.outline-editor code {
+  border-radius: var(--radius-control);
+  background-color: var(--surface-2);
+  padding: 1px 4px;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* Web-Links: gleiche Farbe wie Notiz-Links, aber klassisch unterstrichen */
+.outline-editor a {
+  cursor: pointer;
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: var(--link-line);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 150ms var(--ease-out);
+}
+
+.outline-editor a:hover {
+  text-decoration-color: var(--link);
+}
+
+.outline-editor .ProseMirror-selectednode {
+  border-radius: var(--radius-control);
+  outline: 1px solid var(--text-muted);
+}
+
+.outline-editor p.is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--text-faint);
+}
+
+/* „Block → Aufgabe“ (B5): Checkbox statt Aufzählungspunkt, erledigt = durchgestrichen */
+.ol-check {
+  position: relative;
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--text-faint);
+  border-radius: 4px;
+  color: var(--accent-fg);
+  transition:
+    border-color 150ms var(--ease-out),
+    background-color 150ms var(--ease-out);
+}
+
+.ol-check::after {
+  content: "";
+  position: absolute;
+  inset: -14px;
+}
+
+.ol-check:hover {
+  border-color: var(--text-muted);
+}
+
+.ol-check[hidden] {
+  display: none;
+}
+
+.ol-check[aria-checked="true"] {
+  border-color: var(--accent);
+  background-color: var(--accent);
+}
+
+.ol-check[aria-checked="true"]::before {
+  content: "";
+  width: 8px;
+  height: 4px;
+  margin-top: -2px;
+  border-bottom: 2px solid var(--accent-fg);
+  border-left: 2px solid var(--accent-fg);
+  transform: rotate(-45deg);
+}
+
+.ol-block[data-task] > .ol-gutter > .ol-bullet {
+  display: none;
+}
+
+/* Klapp-Pfeil und Checkbox nebeneinander, wenn ein Aufgaben-Block Kinder hat */
+.ol-block[data-task][data-has-children="true"] > .ol-gutter > .ol-toggle {
+  position: absolute;
+  left: -20px;
+}
+
+.ol-block[data-task="done"] > .ol-body > p {
+  color: var(--text-faint);
+  text-decoration: line-through;
+  text-decoration-color: var(--text-faint);
+}
+
+/* Bilder und Diagramme im Absatz (E24): eigene Zeile, leichter Rahmen, Auswahl wie Knoten */
+.ol-media {
+  /* inline-block mit voller Breite: der Kasten beginnt in der ersten Zeile, der Punkt davor
+     steht oben am Kasten statt allein in einer leeren Zeile */
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  margin: 2px 0 6px;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background-color: var(--surface);
+  user-select: none;
+}
+
+.ol-media.is-selected {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+.ol-image img {
+  display: block;
+  max-width: 100%;
+  max-height: 70vh;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Bild skalieren und zuschneiden (#28): Werkzeuge oben rechts, Griff unten rechts */
+.ol-image {
+  position: relative;
+  /* die Werkzeugleiste schwebt unter dem Bild (deckt kleine Bilder sonst ganz ab) */
+  overflow: visible;
+}
+
+.ol-image img {
+  border-radius: calc(var(--radius-card) - 1px);
+}
+
+/* Klick öffnet die Großansicht (#59) */
+.ol-image.has-viewer img {
+  cursor: zoom-in;
+}
+
+.ol-image.is-sized img {
+  width: 100%;
+  max-height: none;
+}
+
+.ol-image-tools {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 4px);
+  right: 0;
+  display: flex;
+  white-space: nowrap;
+  box-shadow: var(--shadow-float);
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background-color: var(--surface);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms var(--ease-out);
+}
+
+.ol-image-tool {
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0 8px;
+  border-radius: var(--radius-control);
+  color: var(--text-muted);
+  font-size: var(--text-ui-sm);
+}
+
+.ol-image-tool:hover {
+  background-color: var(--surface-2);
+  color: var(--text);
+}
+
+.ol-image-handle {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 14px;
+  height: 14px;
+  border-right: 3px solid var(--text);
+  border-bottom: 3px solid var(--text);
+  border-radius: 0 0 4px 0;
+  cursor: nwse-resize;
+  touch-action: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms var(--ease-out);
+}
+
+/* größere Trefferfläche, ohne den Griff größer zu zeichnen */
+.ol-image-handle::after {
+  content: "";
+  position: absolute;
+  inset: -12px;
+}
+
+.ol-image:hover .ol-image-tools,
+.ol-image:hover .ol-image-handle,
+.ol-image:focus-within .ol-image-tools,
+.ol-image.is-selected .ol-image-tools,
+.ol-image.is-selected .ol-image-handle,
+.ol-image.is-resizing .ol-image-handle {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Touch ohne Hover: Werkzeuge erst nach Antippen (Bild ausgewählt) */
+@media (hover: none) {
+  .ol-image:hover:not(.is-selected) .ol-image-tools,
+  .ol-image:hover:not(.is-selected) .ol-image-handle {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ol-image-tool {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+.ol-media-status {
+  display: block;
+  padding: 8px 12px;
+  font-size: var(--text-meta);
+  color: var(--text-faint);
+}
+
+.ol-media-status:empty {
+  display: none;
+}
+
+.ol-image.is-missing .ol-media-status {
+  color: var(--danger);
+}
+
+.ol-media-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 6px 4px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--text-meta);
+  color: var(--text-faint);
+}
+
+.ol-media-button {
+  min-height: 32px;
+  padding: 0 10px;
+  border-radius: var(--radius-control);
+  color: var(--text-muted);
+  font-size: var(--text-ui-sm);
+}
+
+.ol-media-button:hover {
+  background-color: var(--surface-2);
+  color: var(--text);
+}
+
+@media (pointer: coarse) {
+  .ol-media-button {
+    min-height: 44px;
+  }
+}
+
+/* Datei (#27): Kachel mit Symbol, Name, Art/Größe; PDF wahlweise komplett */
+.ol-file-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 8px 8px 8px 12px;
+}
+
+.ol-file-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ol-file-title {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 12rem;
+  flex-direction: column;
+}
+
+.ol-file-name {
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--link);
+  font-size: var(--text-ui);
+  line-height: var(--text-ui--line-height);
+}
+
+.ol-file-name:hover {
+  text-decoration: underline;
+}
+
+.ol-file-meta {
+  font-size: var(--text-meta);
+  line-height: var(--text-meta--line-height);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.ol-file-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.ol-file[data-view="full"] .ol-file-head {
+  border-bottom: 1px solid var(--border);
+}
+
+.ol-pdf {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+}
+
+.ol-file[data-view="full"] .ol-pdf {
+  padding: 8px;
+  background-color: var(--surface-2);
+}
+
+.ol-pdf-page {
+  display: block;
+  width: 100%;
+  height: auto;
+  background-color: var(--pdf-paper);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+/* #36: Fenster in Seitenhöhe – darin blättern, Seiten rasten leicht ein; Größen setzt pdf-view.ts */
+.ol-pdf[data-window="true"] {
+  position: relative;
+  align-items: center;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-snap-type: y proximity;
+  scroll-padding-block: 8px;
+  scrollbar-width: thin;
+}
+
+.ol-pdf[data-window="true"] .ol-pdf-page {
+  flex-shrink: 0;
+  max-width: 100%;
+  scroll-snap-align: start;
+}
+
+.ol-pdf[data-window="true"]:focus-visible {
+  outline: 2px solid var(--text-muted);
+  outline-offset: -2px;
+}
+
+.ol-pdf-counter {
+  display: block;
+  padding: 4px 12px 8px;
+  text-align: right;
+  font-size: var(--text-meta);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+
+.ol-pdf-counter:empty {
+  display: none;
+}
+
+.ol-file.is-missing .ol-media-status {
+  color: var(--danger);
+}
+
+.ol-mermaid-view {
+  display: block;
+  padding: 12px;
+  overflow-x: auto;
+  text-align: center;
+  font-size: var(--text-ui-sm);
+  color: var(--text-muted);
+}
+
+.ol-mermaid-view svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.ol-mermaid-view.is-empty {
+  color: var(--text-faint);
+}
+
+.ol-mermaid-view.is-error {
+  color: var(--danger);
+  text-align: left;
+}
+
+.ol-mermaid-code {
+  display: block;
+  width: 100%;
+  min-height: 120px;
+  field-sizing: content;
+  resize: none;
+  padding: 10px 12px;
+  border: 0;
+  border-top: 1px solid var(--border);
+  background-color: var(--surface-2);
+  color: var(--text);
+  font-family: var(--font-mono);
+  /* unter 16 px zoomt iOS beim Fokussieren hinein (O-12) – erst ab md kleiner */
+  font-size: var(--text-body-lg);
+  line-height: 1.5;
+  user-select: text;
+}
+
+@media (min-width: 768px) {
+  .ol-mermaid-code {
+    font-size: var(--text-ui-sm);
+  }
+}
+
+.ol-mermaid-code:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}

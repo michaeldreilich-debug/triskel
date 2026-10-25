@@ -1,0 +1,30 @@
+/** Testdaten für Unit-Tests (keine Abhängigkeit zu Vitest, damit überall nutzbar). */
+import type { TaskRow } from "./types";
+
+export const task = (id: string, extra: Partial<TaskRow> = {}): TaskRow => ({
+  id,
+  area_id: "a",
+  project_id: null,
+  milestone_id: null,
+  title: id,
+  body: null,
+  body_text: "",
+  status: "offen",
+  priority: null,
+  due_date: null,
+  scheduled_at: null,
+  duration_min: null,
+  recurrence: null,
+  recurrence_source_id: null,
+  focus_date: null,
+  in_inbox: false,
+  completed_at: null,
+  sort: "a0",
+  created_at: "2026-10-01T00:00:00Z",
+  updated_at: "2026-10-01T00:00:00Z",
+  deleted_at: null,
+  edited_at: null,
+  created_by: "user",
+  assignee: "user",
+  ...extra,
+});

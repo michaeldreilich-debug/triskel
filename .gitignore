@@ -1,0 +1,42 @@
+# Abhängigkeiten
+/node_modules
+
+# Next.js / Build
+/.next/
+
+/out/
+/build
+*.tsbuildinfo
+next-env.d.ts
+
+# Tests
+/coverage
+/playwright-report/
+/test-results/
+/blob-report/
+/playwright/.cache/
+# Sitzung des E2E-Testnutzers (wird nach jedem Lauf gelöscht)
+/playwright/.auth/
+
+# Umgebungsvariablen: NIE committen (nur die Vorlagen)
+.env
+.env*
+!.env.example
+!.env.test.example
+
+# Supabase CLI (lokaler Zustand)
+/supabase/.temp/
+/supabase/.branches/
+
+# Lokale Claude-Code-Einstellungen
+.claude/settings.local.json
+
+# Sonstiges
+.DS_Store
+*.pem
+npm-debug.log*
+.vercel
+/.next-*/
+
+# Datenbank-Sicherungen vor Prod-Migrationen (persönliche Daten, nie committen)
+/.backups/

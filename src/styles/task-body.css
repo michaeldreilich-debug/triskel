@@ -1,0 +1,115 @@
+/*
+ * Notiz/Checkliste einer Aufgabe (TipTap mit TaskList, B5). Nur Token-Variablen.
+ */
+.task-body {
+  outline: none;
+  min-height: 6rem;
+  color: var(--text);
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+  caret-color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.task-body p {
+  margin: 0;
+  padding: 2px 0;
+}
+
+.task-body ul,
+.task-body ol {
+  margin: 0;
+  padding-left: 1.4em;
+}
+
+.task-body ul {
+  list-style: disc;
+}
+
+.task-body ol {
+  list-style: decimal;
+}
+
+.task-body li::marker {
+  color: var(--text-faint);
+}
+
+.task-body ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+}
+
+.task-body li[data-type="taskItem"] {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.task-body li[data-type="taskItem"] > label {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  height: calc(1.6em + 4px);
+  user-select: none;
+}
+
+.task-body li[data-type="taskItem"] > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-body input[type="checkbox"] {
+  appearance: none;
+  display: inline-grid;
+  place-content: center;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: 1.5px solid var(--text-faint);
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.task-body input[type="checkbox"]:checked {
+  border-color: var(--accent);
+  background-color: var(--accent);
+}
+
+.task-body input[type="checkbox"]:checked::before {
+  content: "";
+  width: 8px;
+  height: 4px;
+  margin-top: -2px;
+  border-bottom: 2px solid var(--accent-fg);
+  border-left: 2px solid var(--accent-fg);
+  transform: rotate(-45deg);
+}
+
+.task-body li[data-checked="true"] > div {
+  color: var(--text-faint);
+  text-decoration: line-through;
+}
+
+.task-body code {
+  border-radius: var(--radius-control);
+  background-color: var(--surface-2);
+  padding: 1px 4px;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.task-body a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: var(--link-line);
+  text-underline-offset: 3px;
+}
+
+.task-body p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--text-faint);
+}

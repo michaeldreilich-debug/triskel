@@ -1,0 +1,16 @@
+/login=200
+/=307
+/heute=307
+/dev/ui=404
+/dev/outliner=404
+/wissen=307
+/dev/mfa=404
+/mfa=307
+/mfa/einrichten=307
+/ki-zugang=307
+/dev/google/_test/state=404
+/api/google/start=307
+/api/google/callback=307
+/dev/google/oauth/auth=404
+/freigabe/kurz=404
+/api/freigabe/kurz/datei=404

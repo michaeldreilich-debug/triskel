@@ -1,0 +1,184 @@
+/*
+ * Mehr Formatierung (#40) in Notiz (Outliner), Aufgaben-Notiz und Projekt-Freitext:
+ * Absatzarten über data-kind, Textfarbe (data-color) und Marker (data-marker). Nur Tokens.
+ */
+
+/* ---------- Überschriften ---------- */
+:is(.outline-editor, .task-body) p[data-kind="h1"],
+:is(.outline-editor, .task-body) p[data-kind="h2"],
+:is(.outline-editor, .task-body) p[data-kind="h3"] {
+  font-family: var(--heading-font);
+  font-weight: var(--heading-weight);
+  color: var(--text);
+}
+
+:is(.outline-editor, .task-body) p[data-kind="h1"] {
+  padding: 14px 0 2px;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+:is(.outline-editor, .task-body) p[data-kind="h2"] {
+  padding: 10px 0 2px;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+:is(.outline-editor, .task-body) p[data-kind="h3"] {
+  padding: 6px 0 2px;
+  font-size: 1.0625rem;
+  line-height: 1.625rem;
+  font-weight: 600;
+}
+
+/* Aufzählungspunkt mittig zur ersten Zeile der Überschrift (Rand oben + halbe Zeile) */
+.ol-block:has(> .ol-body > p[data-kind="h1"]) > .ol-gutter {
+  box-sizing: border-box;
+  height: 46px;
+  padding-top: 14px;
+}
+
+.ol-block:has(> .ol-body > p[data-kind="h2"]) > .ol-gutter {
+  box-sizing: border-box;
+  height: 38px;
+  padding-top: 10px;
+}
+
+.ol-block:has(> .ol-body > p[data-kind="h3"]) > .ol-gutter {
+  box-sizing: border-box;
+  height: 32px;
+  padding-top: 6px;
+}
+
+/* ---------- Zitat ---------- */
+:is(.outline-editor, .task-body) p[data-kind="quote"] {
+  margin: 2px 0;
+  border-left: 3px solid var(--border-strong);
+  padding-left: 12px;
+  color: var(--text-muted);
+}
+
+/* ---------- Hinweis-Kasten ---------- */
+:is(.outline-editor, .task-body) p[data-kind="callout"] {
+  position: relative;
+  margin: 4px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background-color: var(--surface-2);
+  padding: 8px 12px 8px 38px;
+}
+
+/* „i“ im Kreis vor dem Text (nur Darstellung) */
+:is(.outline-editor, .task-body) p[data-kind="callout"]::after {
+  content: "i";
+  position: absolute;
+  top: calc(8px + 0.8em - 9px);
+  left: 12px;
+  display: flex;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--text-faint);
+  border-radius: 9999px;
+  color: var(--text-faint);
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.ol-block:has(> .ol-body > p[data-kind="callout"]) > .ol-gutter {
+  box-sizing: border-box;
+  height: calc(1.6em + 22px);
+  padding-top: 6px;
+}
+
+/* ---------- Trennlinie ---------- */
+:is(.outline-editor, .task-body) p[data-kind="divider"] {
+  position: relative;
+  min-height: 1.6em;
+  cursor: default;
+  caret-color: transparent;
+}
+
+:is(.outline-editor, .task-body) p[data-kind="divider"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  border-top: 1px solid var(--border-strong);
+  pointer-events: none;
+}
+
+/* kein Platzhalter und kein Punkt an der Linie */
+:is(.outline-editor, .task-body) p[data-kind="divider"]::before {
+  content: none;
+}
+
+.ol-block:has(> .ol-body > p[data-kind="divider"]) > .ol-gutter > .ol-bullet {
+  visibility: hidden;
+}
+
+/* ---------- Textfarbe ---------- */
+.tx-color[data-color="grau"] {
+  color: var(--ink-grau);
+}
+.tx-color[data-color="rot"] {
+  color: var(--ink-rot);
+}
+.tx-color[data-color="orange"] {
+  color: var(--ink-orange);
+}
+.tx-color[data-color="gelb"] {
+  color: var(--ink-gelb);
+}
+.tx-color[data-color="gruen"] {
+  color: var(--ink-gruen);
+}
+.tx-color[data-color="blau"] {
+  color: var(--ink-blau);
+}
+.tx-color[data-color="lila"] {
+  color: var(--ink-lila);
+}
+
+/* ---------- Marker ---------- */
+.tx-marker {
+  border-radius: 3px;
+  padding: 0 2px;
+  color: inherit;
+  background-color: var(--marker-gelb);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.tx-marker[data-marker="gruen"] {
+  background-color: var(--marker-gruen);
+}
+.tx-marker[data-marker="blau"] {
+  background-color: var(--marker-blau);
+}
+.tx-marker[data-marker="rot"] {
+  background-color: var(--marker-rot);
+}
+.tx-marker[data-marker="lila"] {
+  background-color: var(--marker-lila);
+}
+
+/* Farbmuster in Menü und Leiste („A“ in der Textfarbe, Fläche im Marker) */
+.tx-swatch {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}

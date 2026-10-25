@@ -1,0 +1,259 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+@import "../styles/outliner.css";
+@import "../styles/task-body.css";
+@import "../styles/text-style.css";
+@import "../styles/shared-note.css";
+@import "../styles/daily-intro.css";
+
+/*
+ * Tailwind-Theme ausschließlich aus Tokens. Die Standardpaletten werden zurückgesetzt,
+ * damit keine Farb-, Radius- oder Schriftwerte außerhalb der Tokens benutzt werden können.
+ */
+/* Zusätzlicher Breakpoint: Wissen zeigt die Verknüpfungs-Spalte erst ab 2200 px (4xl), damit
+   die Notiz selbst Platz hat. Eigener Block: in @theme inline registriert Tailwind keine
+   Breakpoint-Varianten. */
+@theme {
+  --breakpoint-4xl: 137.5rem;
+}
+
+@theme inline {
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-sidebar: var(--sidebar);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-link: var(--link);
+  --color-link-line: var(--link-line);
+  --color-fg: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-area-orange: var(--area-orange);
+  --color-area-blue: var(--area-blue);
+  /* Kalenderfarben (S2a): dieselben Token wie die Textfarben im Editor, gespeichert als Schlüssel */
+  --color-ink-grau: var(--ink-grau);
+  --color-ink-rot: var(--ink-rot);
+  --color-ink-orange: var(--ink-orange);
+  --color-ink-gelb: var(--ink-gelb);
+  --color-ink-gruen: var(--ink-gruen);
+  --color-ink-blau: var(--ink-blau);
+  --color-ink-lila: var(--ink-lila);
+  --color-next-step-bg: var(--next-step-bg);
+  --color-next-step-border: var(--next-step-border);
+  --color-next-step-label: var(--next-step-label);
+  --color-overlay: var(--overlay);
+  --color-qr-bg: var(--qr-bg);
+
+  --font-*: initial;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-newsreader), Georgia, serif;
+
+  /* Schriftgrößen in rem (F5): Meta 12 · UI 13–14 · Text 15–16 · Titel 26–34 (nie unter 12 px bei „Normal“);
+     „Schriftgröße“ in den Einstellungen skaliert die Wurzel, alles in rem wächst mit */
+  --text-*: initial;
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1rem;
+  --text-ui-sm: 0.8125rem;
+  --text-ui-sm--line-height: 1.125rem;
+  --text-ui: 0.875rem;
+  --text-ui--line-height: 1.25rem;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.5rem;
+  --text-body-lg: 1rem;
+  --text-body-lg--line-height: 1.625rem;
+  --text-heading: 1.125rem;
+  --text-heading--line-height: 1.625rem;
+  --text-title-sm: 1.625rem;
+  --text-title-sm--line-height: 2rem;
+  --text-title: 1.875rem;
+  --text-title--line-height: 2.25rem;
+  --text-title-lg: 2.125rem;
+  --text-title-lg--line-height: 2.5rem;
+
+  /* Radien: 6 Steuerelemente · 10 Karten/Panels · 14 Sheets mobil (rounded-full für Pillen) */
+  --radius-*: initial;
+  --radius-control: 6px;
+  --radius-card: 10px;
+  --radius-sheet: 14px;
+
+  --shadow-*: initial;
+  --shadow-float: var(--shadow-float);
+
+  /* Layout-Maße */
+  --spacing-sidebar: 15.5rem;
+  --spacing-touch: 44px;
+  /* Leiste unten am Handy (< 768 px): Höhe ohne Rand zum Home-Balken */
+  --spacing-tabbar: 3.5rem;
+  --container-page: 760px;
+
+  /* Bewegung: 120–180 ms, ease-out */
+  --ease-*: initial;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+
+  --animate-*: initial;
+  --animate-pulse: pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in: fade-in 150ms cubic-bezier(0.2, 0, 0, 1);
+  --animate-fade-out: fade-out 120ms cubic-bezier(0.2, 0, 0, 1);
+  --animate-pop-in: pop-in 150ms cubic-bezier(0.2, 0, 0, 1);
+  --animate-sheet-left-in: sheet-left-in 180ms cubic-bezier(0.2, 0, 0, 1);
+  --animate-sheet-left-out: sheet-left-out 150ms cubic-bezier(0.2, 0, 0, 1);
+  --animate-sheet-right-in: sheet-right-in 180ms cubic-bezier(0.2, 0, 0, 1);
+  --animate-sheet-right-out: sheet-right-out 150ms cubic-bezier(0.2, 0, 0, 1);
+  --animate-sheet-bottom-in: sheet-bottom-in 180ms cubic-bezier(0.2, 0, 0, 1);
+  --animate-sheet-bottom-out: sheet-bottom-out 150ms cubic-bezier(0.2, 0, 0, 1);
+  /* Aufgaben-Kreis (Muster 3): Haken zeichnet sich beim Abhaken */
+  --animate-check-draw: check-draw 160ms cubic-bezier(0.2, 0, 0, 1) 40ms both;
+}
+
+@keyframes check-draw {
+  from {
+    stroke-dashoffset: 16;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
+@keyframes sheet-left-in {
+  from {
+    transform: translateX(-100%);
+  }
+}
+@keyframes sheet-left-out {
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes sheet-right-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes sheet-right-out {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes sheet-bottom-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes sheet-bottom-out {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* Überschrift im Stil des aktiven Themes (Papier: Newsreader) */
+@utility heading {
+  /* direkt die Theme-Variable, damit verschachtelte data-theme-Bereiche (z. B. /dev/ui) stimmen */
+  font-family: var(--heading-font), system-ui, sans-serif;
+  font-weight: var(--heading-weight);
+  letter-spacing: -0.01em;
+}
+
+/*
+ * Scroll-Spalte rechts (Aufgaben-Panel, #32): schmaler Balken mit festem Platz – sonst springt
+ * der Inhalt, sobald der Balken auftaucht.
+ */
+@utility scroll-quiet {
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+}
+
+@layer base {
+  /* Schriftgröße je Gerät (F5): Cookie sz-font → data-font am <html>; Normal = 16 px */
+  html[data-font="klein"] {
+    font-size: 93.75%;
+  }
+  html[data-font="gross"] {
+    font-size: 112.5%;
+  }
+  html[data-font="sehr-gross"] {
+    font-size: 125%;
+  }
+
+  html {
+    background-color: var(--bg);
+    color: var(--text);
+    -webkit-text-size-adjust: 100%;
+    /* leiser Scrollbalken (#32): im dunklen Theme blitzte er als heller Streifen am Rand auf –
+       auch die einblendenden Balken am Mac. Vererbt sich auf alle Scroll-Bereiche. */
+    scrollbar-color: var(--border-strong) transparent;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: var(--text-ui);
+    line-height: var(--text-ui--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--text-muted);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--text) 22%, transparent);
+  }
+}
+
+/* Meldungen (Sonner) über der Leiste unten am Handy */
+@media (max-width: 767.98px) {
+  [data-sonner-toaster] {
+    --offset-bottom: calc(var(--spacing-tabbar) + env(safe-area-inset-bottom) + 0.75rem) !important;
+    --mobile-offset-bottom: calc(
+      var(--spacing-tabbar) +
+      env(safe-area-inset-bottom) +
+      0.75rem
+    ) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

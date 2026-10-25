@@ -1,0 +1,147 @@
+/*
+ * Design-Tokens – EINZIGE Quelle für Farbwerte (docs/02-design.md).
+ * Außerhalb dieser Datei sind Hex-, rgb()- und hsl()-Werte verboten
+ * (geprüft durch tests/unit/token-rule.test.ts).
+ *
+ * Themes: data-theme="dark" (Standard, Entwurf A) und data-theme="paper" (Entwurf B).
+ * Die Selektoren gelten auch für verschachtelte Bereiche, damit /dev/ui beide Themes
+ * nebeneinander zeigen kann.
+ */
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0a0a0b;
+  --sidebar: #0e0e10;
+  --surface: #141416;
+  --surface-2: #1c1c1f;
+  /* Blatt hinter PDF-Seiten (#27): PDFs sind für Weiß gesetzt, in beiden Themes */
+  --pdf-paper: #ffffff;
+  --border: #26262a;
+  /* stärkerer Rahmen für Pillen und Tags (Entwurf 08-Wissen) */
+  --border-strong: #3a3a40;
+  --text: #ededef;
+  --text-muted: #a1a1aa;
+  --text-faint: #8b8b93;
+  --accent: #ededef;
+  --accent-fg: #0a0a0b;
+  --success: #3fb950;
+  --warning: #d29922;
+  --danger: #f85149;
+
+  /* Bereichsfarben (gespeichert als Token-Schlüssel orange|blue) */
+  --area-orange: #f0883e;
+  --area-blue: #7aa2f7;
+
+  /* [[Links]] im Outliner (Entwurf 08-Wissen) */
+  --link: #9db9f7;
+  --link-line: #3f5a8f;
+
+  /* Hintergrund des QR-Codes der MFA-Einrichtung: immer weiß (Ruhezone für Scanner) */
+  --qr-bg: #ffffff;
+
+  /* Textfarben und Marker im Editor (#40), gespeichert als Schlüssel grau|rot|… */
+  --ink-grau: #a1a1aa;
+  --ink-rot: #ff7b72;
+  --ink-orange: #ffa657;
+  --ink-gelb: #e3b341;
+  --ink-gruen: #56d364;
+  --ink-blau: #79c0ff;
+  --ink-lila: #d2a8ff;
+  --marker-gelb: rgb(227 179 65 / 0.3);
+  --marker-gruen: rgb(86 211 100 / 0.22);
+  --marker-blau: rgb(121 192 255 / 0.22);
+  --marker-rot: rgb(255 123 114 / 0.24);
+  --marker-lila: rgb(210 168 255 / 0.24);
+
+  /* „Nächster Schritt“-Box */
+  --next-step-bg: #1a1612;
+  --next-step-border: #5c3a1e;
+  --next-step-label: #f0a86a;
+
+  /* Schwebende Elemente (Menüs, Palette, Sheets) */
+  --shadow-float: 0 8px 24px rgb(0 0 0 / 0.45);
+  --overlay: rgb(0 0 0 / 0.55);
+
+  /* Startbild (Supernova-Video): bewusst immer Nacht, in beiden Themes gleich */
+  --intro-night: #020203;
+  --intro-ink: #f7efe3;
+  --intro-ink-soft: #e2d4c2;
+  --intro-ink-faint: rgb(247 239 227 / 0.6);
+  --intro-ember: #ffb25e;
+  --intro-ember-line: rgb(255 190 120 / 0.42);
+  --intro-ember-clear: rgb(255 178 94 / 0);
+  --intro-scrim: rgb(12 6 4 / 0.6);
+  --intro-shade: rgb(8 5 6 / 0.75);
+  --intro-shade-soft: rgb(4 3 6 / 0.6);
+  --intro-dawn: #fff1de;
+
+  /* Überschriften: Dunkel in Geist, Papier in Newsreader */
+  --heading-font: var(--font-geist-sans);
+  --heading-weight: 600;
+}
+
+[data-theme="paper"] {
+  color-scheme: light;
+
+  --bg: #f6f4ef;
+  --sidebar: #f6f4ef;
+  --surface: #ffffff;
+  --surface-2: #efece5;
+  --pdf-paper: #ffffff;
+  --border: #e4e0d7;
+  --border-strong: #d3cdc1;
+  --text: #1c1b19;
+  --text-muted: #55524b;
+  --text-faint: #6e6a61;
+  --accent: #1c1b19;
+  --accent-fg: #f6f4ef;
+  --success: #1f883d;
+  --warning: #8f5f00;
+  --danger: #cf222e;
+
+  --area-orange: #c2410c;
+  --area-blue: #2457c5;
+
+  --link: #2457c5;
+  --link-line: #a9bee8;
+
+  --ink-grau: #6e6a61;
+  --ink-rot: #b42318;
+  --ink-orange: #b54708;
+  --ink-gelb: #8a6100;
+  --ink-gruen: #1a7f37;
+  --ink-blau: #1f5fbf;
+  --ink-lila: #7e3aa8;
+  --marker-gelb: #fbeea0;
+  --marker-gruen: #d4f2d9;
+  --marker-blau: #dce8fb;
+  --marker-rot: #fadcd8;
+  --marker-lila: #ece0f8;
+
+  /* Papier-Variante der „Nächster Schritt“-Box (im Entwurf nicht festgelegt, abgeleitet) */
+  --qr-bg: #ffffff;
+  --next-step-bg: #fbf3ea;
+  --next-step-border: #e8c9a8;
+  --next-step-label: #c2410c;
+
+  --shadow-float: 0 8px 24px rgb(28 27 25 / 0.12);
+  --overlay: rgb(28 27 25 / 0.35);
+
+  /* Startbild: wie im dunklen Theme (Nacht → Licht) */
+  --intro-night: #020203;
+  --intro-ink: #f7efe3;
+  --intro-ink-soft: #e2d4c2;
+  --intro-ink-faint: rgb(247 239 227 / 0.6);
+  --intro-ember: #ffb25e;
+  --intro-ember-line: rgb(255 190 120 / 0.42);
+  --intro-ember-clear: rgb(255 178 94 / 0);
+  --intro-scrim: rgb(12 6 4 / 0.6);
+  --intro-shade: rgb(8 5 6 / 0.75);
+  --intro-shade-soft: rgb(4 3 6 / 0.6);
+  --intro-dawn: #fff1de;
+
+  --heading-font: var(--font-newsreader);
+  --heading-weight: 500;
+}
